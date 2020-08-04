@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
+import Country from './components/Country'
+import Example from './components/Example'
 import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    countries: []
+  }
+  componentDidMount() {
+    const url = `http://168.235.109.53:5000/countries`;
+    axios.get(url).then(response => response.data)
+      .then((data) => {
+        this.setState({ countries: data })
+        console.log(this.state.countries)
+      })
+  }
+  render() {
+    return (
+      <div className="App">
+        <Example />
+      </div>
+    );
+  }
 }
 
 export default App;
